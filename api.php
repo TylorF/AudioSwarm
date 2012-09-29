@@ -23,8 +23,13 @@
 	{
 		postRouter();
 	}
+<<<<<<< HEAD
 	
 	function setUp()
+=======
+	 
+	function authenticate()
+>>>>>>> Mass commit
 	{
 		session_start();
 		# create an instance of the Rdio object with our consumer credentials
