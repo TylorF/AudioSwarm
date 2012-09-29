@@ -12,7 +12,7 @@
 	
 	//print getPlaybackToken(true);
 	//print json_encode(get_object_vars(getPlaybackToken(true)), true);
-	print getSongQueue();
+	//print getSongQueue();
 	
 	if(isset($_GET['command']))
 	{
@@ -134,7 +134,7 @@
 	
 	}
 	
-	function postRouter()
+	function getRouter()
 	{
 		$command = $_GET['command'];
 		switch($command){
@@ -212,7 +212,7 @@
 	{
 		return json_encode(get_object_vars(getNowPlaying()), true);
 	}
-	
+
 	function getNowPlaying()
 	{
 		$playlist = getPlaylist("tracks");
