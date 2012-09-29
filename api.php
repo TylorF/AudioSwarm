@@ -9,9 +9,9 @@
 	//$playback_token = "GBNQZzz3ACojA3J0ZHg0ZDZmcnBjY2syZWo4cXE2dTVjamxhYnMuZGllbWV0YWxsZS5jb22IqHrPSpIrOKtc7w7odJpI";
 	$rdio = authenticate();
 	//setUp();
-	
+
 	//print getPlaybackToken(true);
-	//print json_encode(get_object_vars(getPlaybackToken(true)), true);
+	//print json_encode(get_object_vars(search("Psy", "gangnam style")), true);
 	//print getSongQueue();
 	
 	if(isset($_GET['command']))
@@ -226,12 +226,17 @@
 		global $rdio;
 		if($key)
 		{
-			$results = $rdio->call('search', array("query" => $key, "types" => "Artist, Track"));
-			echo json_encode(array("returnValue"=>$results));
+			$results = $rdio->call('search', array("query" => $key, "types" => "Artist, Track"))->result;
+			//$arr = json_decode($results, true);
+
+			echo json_encode(array("key"=> $results->results['1']->key, 
+				"artist"=> $results->results['1']->artist,
+				"song"=> $results->results['1']->name
+				));
 		}
 		else
 		{
-			echo json_encode(array("returnValue"=>""));
+			echo json_encode(array("returnValue"=>"Not Found"));
 		}
 
 

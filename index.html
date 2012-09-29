@@ -38,11 +38,13 @@
             
         });
         function sendValue(str){
-            $.post("http://labs.diemetalle.com/audioswarm/stumanfoo/api.php",{ },
+            $.post("http://labs.diemetalle.com/audioswarm/stumanfoo/api.php",{command: "search", keyword: str},
             function(data){
-                $('#display').html(data.returnValue);
+                $('#artist').html("Artist: " + data.artist);
+                $('#song').html("Song: " + data.song);
+
             }, "json");
-            
+             
         }
         
     </script>
@@ -79,7 +81,9 @@
     	<label for="txtValue">Search: </label>
     	<input type="text" name="txtValue" value="" id="txtValue">
     	
-    	<div id="display"></div>
+    	<div id="artist"></div>
+      <div id="song"></div>
+      <div id="display"></div>
 
 
 
