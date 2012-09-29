@@ -13,7 +13,7 @@
 		//echo json_encode(array("returnValue"=>"Yay!"));
 		router();
 	}
-	
+	  
 	function authenticate()
 	{
 		session_start();
