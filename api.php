@@ -4,32 +4,17 @@
 	require_once 'om.php';
 	require_once 'rdio.php';
 	
-	$oatoken = null;
-	$oatokensec = null;
-	//$playback_token = "GBNQZzz3ACojA3J0ZHg0ZDZmcnBjY2syZWo4cXE2dTVjamxhYnMuZGllbWV0YWxsZS5jb22IqHrPSpIrOKtc7w7odJpI";
+	$playback_token = "GBNQZzz3ACojA3J0ZHg0ZDZmcnBjY2syZWo4cXE2dTVjamxhYnMuZGllbWV0YWxsZS5jb22IqHrPSpIrOKtc7w7odJpI";
 	$rdio = authenticate();
-	//setUp();
-	
-	//print getPlaybackToken(true);
-	//print json_encode(get_object_vars(getPlaybackToken(true)), true);
-	print getSongQueue();
-	
-	if(isset($_GET['command']))
-	{
-		getRouter();
-	}
-	
+	//print json_encode(get_object_vars(search("ellie goulding", "lights")), true);
+	//echo json_encode(array("returnValue"=>"Yay!"));
 	if(isset($_POST['command']))
 	{
-		postRouter();
+		//echo json_encode(array("returnValue"=>"Yay!"));
+		router();
 	}
-<<<<<<< HEAD
 	
-	function setUp()
-=======
-	 
 	function authenticate()
->>>>>>> Mass commit
 	{
 		session_start();
 		# create an instance of the Rdio object with our consumer credentials
@@ -43,8 +28,6 @@
 		  # we have a token in our session, let's use it
 		  $rdio->token = array($_SESSION['oauth_token'],
 		    $_SESSION['oauth_token_secret']);
-		    $json = json_encode(array("oauth_token"=>$rdio->token[0], "oauth_token_secret"=>$rdio->token[1]));
-		    file_put_contents('tokens.json', $json);
 		  if ($_GET['oauth_verifier']) {
 		    # we've been passed a verifier, that means that we're in the middle of
 		    # authentication.
@@ -79,44 +62,20 @@
 		    //return json_encode(new array(success => false));
 		  }
 		} else {
-		  # we have no authentication tokens
+		  # we have no authentication tokens.
 		  # ask the user to approve this app
 		  $authorize_url = $rdio->begin_authentication($current_url);
 		  # save the new token in our session
 		  $_SESSION['oauth_token'] = $rdio->token[0];
 		  $_SESSION['oauth_token_secret'] = $rdio->token[1];
-		  $json = json_encode(array("oauth_token"=>$rdio->token[0], "oauth_token_secret"=>$rdio->token[1]));
-		  file_put_contents('tokens.json', $$json);
 			
 		  header('Location: '.$authorize_url);
 		}
 		return $rdio;
 		
 	}
-	
-	function authenticate()
-	{
-		global $oatoken, $oatokensec;
-		$rdio = new Rdio(array(RDIO_CONSUMER_KEY, RDIO_CONSUMER_SECRET));
-		$file = file_get_contents('tokens.json');
-		if ($file != false)
-		{
-			$arr = json_decode($file, true);
-			$oatoken = $arr['oauth_token'];
-			$oatokensec = $arr['oauth_token_secret'];
-			$rdio->token = array($oatoken,
-			  $oatokensec);
-			return $rdio;
-		}		
-		else 
-		{
-			return setUp();
-		}
-		
-		
-	}
 
-	function postRouter()
+	function router()
 	{
 		$command = $_POST['command'];
 		switch($command){
@@ -125,35 +84,6 @@
 				break;
 			case ('search'):
 				return search($_POST['keyword']);
-				break;
-			case ('songQueue'):
-				print getSongQueue();
-				break;
-			case ('getCurrentlyPlayingSong'):
-				print getNowPlayingInterface();
-				break;
-				
-			default:
-				break;
-		}
-	
-	}
-	
-	function postRouter()
-	{
-		$command = $_GET['command'];
-		switch($command){
-			case ('getPlaybackToken'):
-				return getPlaybackToken(false);
-				break;
-			case ('search'):
-				return search($_GET['keyword']);
-				break;
-			case ('songQueue'):
-				print getSongQueue();
-				break;
-			case ('getCurrentlyPlayingSong'):
-				print getNowPlayingInterface();
 				break;
 				
 			default:
@@ -175,19 +105,10 @@
 		}	
 	}
 	
-	function getSongQueue()
-	{
-		$playlist = getPlaylist("");
-		$playback_token = getPlaybackToken(true);
-		$array = array("token"=>$playback_token, "playlist"=>$playlist->key);
-		$json = json_encode($array, true);
-		return $json;
-	}
-	
-	function getPlaylist($extras)
+	function getPlaylist()
 	{
 		global $rdio;
-		$playlist = reset($rdio->call('getPlaylists', array("extras"=>$extras))->result->owned);
+		$playlist = reset($rdio->call('getPlaylists')->result->owned);
 		if($playlist != null){
 			return $playlist;
 		} else {
@@ -203,27 +124,8 @@
 			"name"=>"default",
 			"description" => "default playlist",
 			"tracks" => ""));
-		return $playlist->result;
+		return $playlist;
 	
-	}
-	
-	function removePlayedSong()
-	{
-		
-	
-	}
-	
-	function getNowPlayingInterface()
-	{
-		return json_encode(get_object_vars(getNowPlaying()), true);
-	}
-	
-	function getNowPlaying()
-	{
-		$playlist = getPlaylist("tracks");
-		$song = reset($playlist->tracks);
-		return $song;
-		
 	}
 
 	function search($key)
@@ -231,12 +133,12 @@
 		global $rdio;
 		if($key)
 		{
-			$results = $rdio->call('search', array("query" => $key, "types" => "Artist", "Track"));
-			return $results;
+			$results = $rdio->call('search', array("query" => $key, "types" => "Artist, Track"));
+			echo json_encode(array("returnValue"=>$results));
 		}
 		else
 		{
-			return $results;
+			echo json_encode(array("returnValue"=>""));
 		}
 
 
