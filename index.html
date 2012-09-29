@@ -42,7 +42,8 @@
             function(data){
                 $('#artist').html("Artist: " + data.artist);
                 $('#song').html("Song: " + data.song);
-
+                $('#button').html("<form name=\"song_submit\" action=\"xyz.php\" method=\"post\" ><input type=\"hidden\" name=\"key\" value=" + data.key +"><input type=\"submit\"> </form>"
+                  );
             }, "json");
              
         }
@@ -83,7 +84,7 @@
     	
     	<div id="artist"></div>
       <div id="song"></div>
-      <div id="display"></div>
+      <div id="button"></div>
 
 
 
