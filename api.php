@@ -6,6 +6,7 @@
 	
 	$playback_token = "GBNQZzz3ACojA3J0ZHg0ZDZmcnBjY2syZWo4cXE2dTVjamxhYnMuZGllbWV0YWxsZS5jb22IqHrPSpIrOKtc7w7odJpI";
 	$rdio = authenticate();
+	print var_dump(get_object_vars(getPlaylist()));
 	
 	if(isset($_POST['command']))
 	{
@@ -92,7 +93,7 @@
 		
 		global $rdio, $playback_token;
 		if ($new){
-			$key = $rdio->call('getPlaybackToken', array(domain => "labs.diemetalle.com"));
+			$key = $rdio->call('getPlaybackToken', array("domain" => "labs.diemetalle.com"));
 			$playback_token = $key->result;
 			return $playback_token;
 		} else {
@@ -103,8 +104,23 @@
 	function getPlaylist()
 	{
 		global $rdio;
-		$playlist = $rdio->call('getPlaylists')->result->owned;
-		
+		$playlist = reset($rdio->call('getPlaylists')->result->owned);
+		if($playlist != null){
+			return $playlist;
+		} else {
+			return createPlaylist();
+		}
+	
+	}
+	
+	function createPlaylist()
+	{
+		global $rdio;
+		$playlist = $rdio->call('createPlaylist', array(
+			"name"=>"default",
+			"description" => "default playlist",
+			"tracks" => ""));
+		return $playlist;
 	
 	}
 
