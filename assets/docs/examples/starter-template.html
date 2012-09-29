@@ -27,25 +27,6 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" charset="utf-8">
-
-        $(document).ready(function(){
-            $('#txtValue').keyup(function(){
-                sendValue($(this).val());   
-                
-            }); 
-            
-        });
-        function sendValue(str){
-            $.post("ajax.php",{ sendValue: str },
-            function(data){
-                $('#display').html(data.returnValue);
-            }, "json");
-            
-        }
-        
-    </script>
   </head>
 
   <body>
@@ -74,17 +55,6 @@
 
       <h1>Bootstrap starter template</h1>
       <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
-
-    <label for="txtValue">Enter a value : </label>
-    <input type="text" name="txtValue" value="" id="txtValue">
-    
-    <div id="display"></div>
-
-
-
-
-
-
 
     </div> <!-- /container -->
 
