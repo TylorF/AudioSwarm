@@ -8,14 +8,6 @@
 	$oatokensec = null;
 	//$playback_token = "GBNQZzz3ACojA3J0ZHg0ZDZmcnBjY2syZWo4cXE2dTVjamxhYnMuZGllbWV0YWxsZS5jb22IqHrPSpIrOKtc7w7odJpI";
 	$rdio = authenticate();
-<<<<<<< HEAD
-	//print json_encode(get_object_vars(search("ellie goulding", "lights")), true);
-	//echo json_encode(array("returnValue"=>"Yay!"));
-	if(isset($_POST['command']))
-	{
-		//echo json_encode(array("returnValue"=>"Yay!"));
-		router();
-=======
 	//setUp();
 	
 	//print getPlaybackToken(true);
@@ -30,7 +22,6 @@
 	if(isset($_POST['command']))
 	{
 		postRouter();
->>>>>>> Lots of changes yo
 	}
 	
 	function setUp()
@@ -235,12 +226,12 @@
 		global $rdio;
 		if($key)
 		{
-			$results = $rdio->call('search', array("query" => $key, "types" => "Artist, Track"));
-			echo json_encode(array("returnValue"=>$results));
+			$results = $rdio->call('search', array("query" => $key, "types" => "Artist", "Track"));
+			return $results;
 		}
 		else
 		{
-			echo json_encode(array("returnValue"=>""));
+			return $results;
 		}
 
 
