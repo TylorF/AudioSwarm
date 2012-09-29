@@ -132,7 +132,7 @@
 		global $rdio;
 		if($key)
 		{
-			$results = $rdio->call('search', array(query => $key, types => "Track"));
+			$results = $rdio->call('search', array("query" => $key, "types" => "Artist", "Track"));
 			return $results;
 		}
 		else
