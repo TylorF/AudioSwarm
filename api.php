@@ -78,6 +78,7 @@
 		$command = $_POST['command'];
 		switch($command){
 			case ('getPlaybackToken'):
+				return getPlaybackToken(false);
 				break;
 				
 			default:
@@ -102,7 +103,8 @@
 	function getPlaylist()
 	{
 		global $rdio;
-		$playlists = $rdio->call('getPlaylists');
+		$playlist = $rdio->call('getPlaylists')->result->owned;
+		
 	
 	}
 
