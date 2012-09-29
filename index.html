@@ -42,7 +42,7 @@
             function(data){
                 $('#artist').html("Artist: " + data.artist);
                 $('#song').html("Song: " + data.song);
-                $('#button').html("<form name=\"song_submit\" action=\"\" method=\"post\" ><input type=\"hidden\" name=\"key\" value=" + data.key +"><input type=\"button\" onclick=\"addSong("+data.key + ");\" value=\"Submit\"> </form>"
+                $('#button').html("<form name=\"song_submit\" action=\"javascript:addSong("+data.key+")\" method=\"post\" ><input type=\"hidden\" name=\"key\" value=" + data.key +"><input type=\"submit\" > </form>"
                   );
             }, "json");
              
