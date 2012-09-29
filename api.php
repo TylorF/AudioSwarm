@@ -132,9 +132,8 @@
 		global $rdio;
 		if($key)
 		{
-			$temp = $rdio->call('search', array(query => $key, query => "Track"));
-			$results = $temp->result;
-			return $results;s
+			$results = $rdio->call('search', array(query => $key, types => "Track"));
+			return $results;
 		}
 		else
 		{
