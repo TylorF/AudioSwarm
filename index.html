@@ -38,7 +38,7 @@
             
         });
         function sendValue(str){
-            $.post("ajax.php",{ sendValue: str },
+            $.post("http://labs.diemetalle.com/audioswarm/stumanfoo/api.php",{ },
             function(data){
                 $('#display').html(data.returnValue);
             }, "json");
