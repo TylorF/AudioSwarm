@@ -81,6 +81,9 @@
 			case ('getPlaybackToken'):
 				return getPlaybackToken(false);
 				break;
+			case ('search'):
+				return search($_POST['keyword']);
+				break;
 				
 			default:
 				break;
@@ -122,6 +125,23 @@
 			"tracks" => ""));
 		return $playlist;
 	
+	}
+
+	function search($key)
+	{
+		global $rdio;
+		if($key)
+		{
+			$temp = $rdio->call('search', array(query => $key, query => "Track"));
+			$results = $temp->result;
+			return $results;s
+		}
+		else
+		{
+			return $results;
+		}
+
+
 	}
 
 ?>
